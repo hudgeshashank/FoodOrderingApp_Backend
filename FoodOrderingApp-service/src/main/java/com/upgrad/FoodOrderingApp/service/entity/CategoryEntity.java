@@ -5,7 +5,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "CATEGORY")
+@Table(name = "category")
+@NamedQueries({
+
+        @NamedQuery(name = "getCategoryById",query = "SELECT c FROM CategoryEntity c WHERE c.id = :categryId"),
+        @NamedQuery(name = "getAllCategories",query = "SELECT c FROM CategoryEntity c ORDER BY c.categoryName ASC "),
+})
 public class CategoryEntity {
 
     @Id
