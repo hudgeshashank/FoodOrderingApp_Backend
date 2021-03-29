@@ -178,4 +178,24 @@ public class AddressBusinessService {
         }
         return  stateEntity;
     }
+
+    public AddressEntity getAddressByAddressId(final String addressId, final CustomerEntity customerEntity)throws AuthorizationFailedException,AddressNotFoundException{
+        if(addressId == null){
+            throw new AddressNotFoundException("ANF-005","Address id can not be empty");
+        }
+
+        AddressEntity addressEntity = addressDao.getAddressByAddressId(addressId);
+        if (addressEntity == null){
+            throw new AddressNotFoundException("ANF-003","No address by this id");
+        }
+
+        CustomerAddressEntity customerAddressEntity = customerAddressDao.getCustomerAddressByAddress(addressEntity);
+
+        if(customerAddressEntity.getCustomer().getUuid() == customerEntity.getUuid()){
+            return addressEntity;
+        }else{
+            throw new AuthorizationFailedException("ATHR-004","You are not authorized to view/update/delete any one else's address");
+        }
+
+    }
 }

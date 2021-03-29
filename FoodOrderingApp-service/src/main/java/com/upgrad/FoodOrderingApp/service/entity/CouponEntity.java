@@ -5,6 +5,10 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "coupon")
+@NamedQueries({
+        @NamedQuery(name = "getCouponDetailsByName", query = "SELECT c from CouponEntity c where c.couponName = :couponName"),
+        @NamedQuery(name = "getCouponByCouponId",query = "SELECT c FROM  CouponEntity c WHERE c.uuid = :uuid"),
+})
 public class CouponEntity {
 
     @Id

@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +20,7 @@ import java.util.Set;
         @NamedQuery(name = "restaurantsByName",query = "SELECT r FROM  RestaurantEntity r WHERE LOWER(r.restaurantName) LIKE :restaurant_name_low"),
 })
 
-public class RestaurantEntity {
+public class RestaurantEntity implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,7 +42,7 @@ public class RestaurantEntity {
 
     @Column(name = "customer_rating")
     @NotNull
-    private String customerRating;
+    private double customerRating;
 
     @Column(name = "average_price_for_two")
     @NotNull
@@ -95,7 +96,7 @@ public class RestaurantEntity {
         this.photoUrl = photoUrl;
     }
 
-    public String getCustomerRating() {
+    public double getCustomerRating() {
         return customerRating;
     }
 

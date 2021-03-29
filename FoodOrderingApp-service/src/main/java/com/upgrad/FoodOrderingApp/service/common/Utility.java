@@ -108,4 +108,32 @@ public class Utility {
         return (m.find() && m.group().equals(pincode));
     }
 
+    public Map<String,Integer> sortMapByValues(Map<String,Integer> map){
+
+        List<Map.Entry<String,Integer>> list = new LinkedList<Map.Entry<String, Integer>>(map.entrySet());
+
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return (o2.getValue().compareTo(o1.getValue()));
+            }
+        });
+
+        Map<String, Integer> sortedByValueMap = new LinkedHashMap<String, Integer>();
+        for (Map.Entry<String, Integer> item : list) {
+            sortedByValueMap.put(item.getKey(), item.getValue());
+        }
+
+        return sortedByValueMap;
+    }
+
+    public boolean isValidCustomerRating(String cutomerRating){
+        if(cutomerRating.equals("5.0")){
+            return true;
+        }
+        Pattern p = Pattern.compile("[1-4].[0-9]");
+        Matcher m = p.matcher(cutomerRating);
+        return (m.find() && m.group().equals(cutomerRating));
+    }
+
 }

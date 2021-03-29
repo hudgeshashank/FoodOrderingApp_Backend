@@ -3,11 +3,18 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
+@NamedQueries({
+        @NamedQuery(name = "getOrdersByCustomer",query = "SELECT o FROM OrderEntity o WHERE o.customer = :customer ORDER BY o.date DESC "),
+        @NamedQuery(name = "getOrdersByRestaurant",query = "SELECT o FROM OrderEntity o WHERE o.restauarnt = :restaurant"),
+        @NamedQuery(name = "getOrdersByAddress",query = "SELECT o FROM OrderEntity o WHERE o.address = :address")
+})
 public class OrderEntity {
 
     @Id
@@ -20,13 +27,13 @@ public class OrderEntity {
     private String uuid;
 
     @Column(name = "bill")
-    private BigDecimal bill;
+    private double bill;
 
     @Column(name = "date")
-    private BigDecimal discount;
+    private double discount;
 
     @Column(name = "date")
-    private ZonedDateTime date;
+    private Timestamp date;
 
     @ManyToOne
     @JoinColumn(name = "coupon_id")
@@ -67,27 +74,27 @@ public class OrderEntity {
         this.uuid = uuid;
     }
 
-    public BigDecimal getBill() {
+    public double getBill() {
         return bill;
     }
 
-    public void setBill(BigDecimal bill) {
+    public void setBill(double bill) {
         this.bill = bill;
     }
 
-    public BigDecimal getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(BigDecimal discount) {
+    public void setDiscount(double discount) {
         this.discount = discount;
     }
 
-    public ZonedDateTime getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(ZonedDateTime date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 

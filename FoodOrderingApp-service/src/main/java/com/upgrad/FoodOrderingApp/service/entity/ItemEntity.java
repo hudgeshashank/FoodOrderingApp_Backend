@@ -1,13 +1,21 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.List;
+import java.util.ArrayList;
+
+import com.upgrad.FoodOrderingApp.service.common.ItemType;
 
 @Entity
 @Table(name = "ITEM")
-public class ItemEntity {
+@NamedQueries({
+        @NamedQuery(name = "getItemById",query = "SELECT i FROM ItemEntity i WHERE i.uuid = :uuid"),
+})
+public class ItemEntity implements Serializable {
 
     @Id
     @Column(name = "id")
@@ -24,12 +32,20 @@ public class ItemEntity {
     @Size(max = 30)
     private String itemName;
 
+    @Column(name = "price")
+    @NotNull
+    private Integer price;
+
+    @Column(name = "type")
+    @Size(max = 10)
+    @NotNull
+    private ItemType type;
+
     @ManyToMany(mappedBy = "item")
     private List<RestaurantEntity> restaurants;
 
     @ManyToMany(mappedBy = "item")
     private List<CategoryEntity> categories;
-
 
     public Integer getId() {
         return id;
@@ -66,6 +82,7 @@ public class ItemEntity {
         return super.toString();
     }
 
+
     public List<RestaurantEntity> getRestaurants() {
         return restaurants;
     }
@@ -84,5 +101,21 @@ public class ItemEntity {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public ItemType getType() {
+        return type;
+    }
+
+    public void setType(ItemType type) {
+        this.type = type;
     }
 }

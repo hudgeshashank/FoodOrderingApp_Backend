@@ -5,6 +5,12 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "order_item")
+@NamedQueries({
+
+        @NamedQuery(name = "fetchItemDetails",query = "SELECT o FROM OrderItemEntity o WHERE o.order = :orders ORDER BY LOWER(o.item.itemName) ASC"),
+        @NamedQuery(name = "getItemsByOrders",query = "SELECT o FROM OrderItemEntity o WHERE o.order = :ordersEntity"),
+
+})
 public class OrderItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -68,4 +74,12 @@ public class OrderItemEntity {
 
     @Column(name = "price")
     private Integer price;
+
+    public OrderEntity getOrderEntity() {
+        return orderEntity;
+    }
+
+    public void setOrderEntity(OrderEntity orderEntity) {
+        this.orderEntity = orderEntity;
+    }
 }

@@ -1,6 +1,9 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
+import com.upgrad.FoodOrderingApp.service.dao.PaymentDao;
 import com.upgrad.FoodOrderingApp.service.entity.PaymentEntity;
+import com.upgrad.FoodOrderingApp.service.exception.PaymentMethodNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,8 +11,21 @@ import java.util.List;
 @Service
 public class PaymentBusinessService {
 
+    @Autowired
+    PaymentDao paymentDao;
+
     public List<PaymentEntity> fetchAllPayments()
     {
-        return null;
+        List<PaymentEntity> paymentEntities = paymentDao.getAllPaymentMethods();
+        return paymentEntities;
+    }
+
+    public PaymentEntity getPaymentByPaymentId(String paymentId) throws PaymentMethodNotFoundException {
+
+        PaymentEntity paymentEntity = paymentDao.getPaymentByPaymentId(paymentId);
+        if(paymentEntity == null){
+            throw new PaymentMethodNotFoundException("PNF-002","No payment method found by this id");
+        }
+        return paymentEntity;
     }
 }
