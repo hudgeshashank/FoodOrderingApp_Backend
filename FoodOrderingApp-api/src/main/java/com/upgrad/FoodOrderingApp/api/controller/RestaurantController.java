@@ -42,6 +42,7 @@ public class RestaurantController {
     @Autowired
     CustomerBusinessService customerBusinessService; // Handles all the Service Related to Customer.
 
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, path = "/restaurant",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RestaurantListResponse> getrestaurantList()
     {
@@ -67,14 +68,14 @@ public class RestaurantController {
 
             //Creating the RestaurantDetailsResponseAddressState for the RestaurantDetailsResponseAddress
             RestaurantDetailsResponseAddressState restaurantDetailsResponseAddressState = new RestaurantDetailsResponseAddressState()
-                    .id(UUID.fromString(restaurantEntity.getAddress().getState().getStateUuid()))
+                    .id(UUID.fromString(restaurantEntity.getAddress().getState().getUuid()))
                     .stateName(restaurantEntity.getAddress().getState().getStateName());
 
             //Creating the RestaurantDetailsResponseAddress for the RestaurantList
             RestaurantDetailsResponseAddress restaurantDetailsResponseAddress = new RestaurantDetailsResponseAddress()
                     .id(UUID.fromString(restaurantEntity.getAddress().getUuid()))
                     .city(restaurantEntity.getAddress().getCity())
-                    .flatBuildingName(restaurantEntity.getAddress().getFlatBuilNo())
+                    .flatBuildingName(restaurantEntity.getAddress().getFlatBuildNumber())
                     .locality(restaurantEntity.getAddress().getLocality())
                     .pincode(restaurantEntity.getAddress().getPincode())
                     .state(restaurantDetailsResponseAddressState);
@@ -83,10 +84,10 @@ public class RestaurantController {
             RestaurantList restaurantList = new RestaurantList()
                     .id(UUID.fromString(restaurantEntity.getUuid()))
                     .restaurantName(restaurantEntity.getRestaurantName())
-                    .averagePrice(restaurantEntity.getAvgPrice())
+                    .averagePrice(restaurantEntity.getAveragePriceForTwo())
                     .categories(categories)
                     .customerRating(BigDecimal.valueOf(restaurantEntity.getCustomerRating()))
-                    .numberCustomersRated(restaurantEntity.getNumberCustomersRated())
+                    .numberCustomersRated(restaurantEntity.getNumber_of_customers_rated())
                     .photoURL(restaurantEntity.getPhotoUrl())
                     .address(restaurantDetailsResponseAddress);
 
@@ -99,9 +100,9 @@ public class RestaurantController {
         RestaurantListResponse restaurantListResponse = new RestaurantListResponse().restaurants(restaurantLists);
         return new ResponseEntity<RestaurantListResponse>(restaurantListResponse,HttpStatus.OK);
     }
-        //return null;
-    }
 
+
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, path = "/restaurant/name/{restaurant_name}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RestaurantListResponse> getrestaurantByName(@PathVariable("restaurant_name")final String restaurant_name)throws RestaurantNotFoundException
     {
@@ -128,14 +129,14 @@ public class RestaurantController {
 
                 //Creating the RestaurantDetailsResponseAddressState for the RestaurantDetailsResponseAddress
                 RestaurantDetailsResponseAddressState restaurantDetailsResponseAddressState = new RestaurantDetailsResponseAddressState()
-                        .id(UUID.fromString(restaurantEntity.getAddress().getState().getStateUuid()))
+                        .id(UUID.fromString(restaurantEntity.getAddress().getState().getUuid()))
                         .stateName(restaurantEntity.getAddress().getState().getStateName());
 
                 //Creating the RestaurantDetailsResponseAddress for the RestaurantList
                 RestaurantDetailsResponseAddress restaurantDetailsResponseAddress = new RestaurantDetailsResponseAddress()
                         .id(UUID.fromString(restaurantEntity.getAddress().getUuid()))
                         .city(restaurantEntity.getAddress().getCity())
-                        .flatBuildingName(restaurantEntity.getAddress().getFlatBuilNo())
+                        .flatBuildingName(restaurantEntity.getAddress().getFlatBuildNumber())
                         .locality(restaurantEntity.getAddress().getLocality())
                         .pincode(restaurantEntity.getAddress().getPincode())
                         .state(restaurantDetailsResponseAddressState);
@@ -144,10 +145,10 @@ public class RestaurantController {
                 RestaurantList restaurantList = new RestaurantList()
                         .id(UUID.fromString(restaurantEntity.getUuid()))
                         .restaurantName(restaurantEntity.getRestaurantName())
-                        .averagePrice(restaurantEntity.getAvgPrice())
+                        .averagePrice(restaurantEntity.getAveragePriceForTwo())
                         .categories(categories)
                         .customerRating(BigDecimal.valueOf(restaurantEntity.getCustomerRating()))
-                        .numberCustomersRated(restaurantEntity.getNumberCustomersRated())
+                        .numberCustomersRated(restaurantEntity.getNumber_of_customers_rated())
                         .photoURL(restaurantEntity.getPhotoUrl())
                         .address(restaurantDetailsResponseAddress);
 
@@ -165,6 +166,7 @@ public class RestaurantController {
 
     }
 
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, path = "/restaurant/category/{category_id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RestaurantListResponse> getrestaurantByCategoryId(@PathVariable("category_id")final String category_id) throws CategoryNotFoundException
     {
@@ -189,14 +191,14 @@ public class RestaurantController {
 
             //Creating the RestaurantDetailsResponseAddressState for the RestaurantDetailsResponseAddress
             RestaurantDetailsResponseAddressState restaurantDetailsResponseAddressState = new RestaurantDetailsResponseAddressState()
-                    .id(UUID.fromString(restaurantEntity.getAddress().getState().getStateUuid()))
+                    .id(UUID.fromString(restaurantEntity.getAddress().getState().getUuid()))
                     .stateName(restaurantEntity.getAddress().getState().getStateName());
 
             //Creating the RestaurantDetailsResponseAddress for the RestaurantList
             RestaurantDetailsResponseAddress restaurantDetailsResponseAddress = new RestaurantDetailsResponseAddress()
                     .id(UUID.fromString(restaurantEntity.getAddress().getUuid()))
                     .city(restaurantEntity.getAddress().getCity())
-                    .flatBuildingName(restaurantEntity.getAddress().getFlatBuilNo())
+                    .flatBuildingName(restaurantEntity.getAddress().getFlatBuildNumber())
                     .locality(restaurantEntity.getAddress().getLocality())
                     .pincode(restaurantEntity.getAddress().getPincode())
                     .state(restaurantDetailsResponseAddressState);
@@ -205,10 +207,10 @@ public class RestaurantController {
             RestaurantList restaurantList = new RestaurantList()
                     .id(UUID.fromString(restaurantEntity.getUuid()))
                     .restaurantName(restaurantEntity.getRestaurantName())
-                    .averagePrice(restaurantEntity.getAvgPrice())
+                    .averagePrice(restaurantEntity.getAveragePriceForTwo())
                     .categories(categories)
                     .customerRating(BigDecimal.valueOf(restaurantEntity.getCustomerRating()))
-                    .numberCustomersRated(restaurantEntity.getNumberCustomersRated())
+                    .numberCustomersRated(restaurantEntity.getNumber_of_customers_rated())
                     .photoURL(restaurantEntity.getPhotoUrl())
                     .address(restaurantDetailsResponseAddress);
 
@@ -223,6 +225,7 @@ public class RestaurantController {
 
     }
 
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, path = "/api/restaurant/{restaurant_id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RestaurantDetailsResponse> getrestaurantById(@PathVariable("restaurant_id")final String restaurant_id)throws RestaurantNotFoundException
     {
@@ -237,7 +240,7 @@ public class RestaurantController {
         for (CategoryEntity categoryEntity:categoryEntities){  //Looping for each CategoryEntity in categoryEntities
 
             //Calls getItemsByCategoryAndRestaurant of itemService to get list of itemEntities.
-            List<ItemEntity> itemEntities = itemBusinessService.getItemsByCategoryAndRestaurant(restaurantUuid ,categoryEntity.getUuid());
+            List<ItemEntity> itemEntities = itemBusinessService.getItemsByCategoryAndRestaurant(restaurant_id ,categoryEntity.getUuid());
             //Creating Item List for the CategoryList.
             List<ItemList> itemLists = new LinkedList<>();
             itemEntities.forEach(itemEntity -> {
@@ -260,14 +263,14 @@ public class RestaurantController {
 
         //Creating the RestaurantDetailsResponseAddressState for the RestaurantDetailsResponseAddress
         RestaurantDetailsResponseAddressState restaurantDetailsResponseAddressState = new RestaurantDetailsResponseAddressState()
-                .id(UUID.fromString(restaurantEntity.getAddress().getState().getStateUuid()))
+                .id(UUID.fromString(restaurantEntity.getAddress().getState().getUuid()))
                 .stateName(restaurantEntity.getAddress().getState().getStateName());
 
         //Creating the RestaurantDetailsResponseAddress for the RestaurantList
         RestaurantDetailsResponseAddress restaurantDetailsResponseAddress = new RestaurantDetailsResponseAddress()
                 .id(UUID.fromString(restaurantEntity.getAddress().getUuid()))
                 .city(restaurantEntity.getAddress().getCity())
-                .flatBuildingName(restaurantEntity.getAddress().getFlatBuilNo())
+                .flatBuildingName(restaurantEntity.getAddress().getFlatBuildNumber())
                 .locality(restaurantEntity.getAddress().getLocality())
                 .pincode(restaurantEntity.getAddress().getPincode())
                 .state(restaurantDetailsResponseAddressState);
@@ -276,9 +279,9 @@ public class RestaurantController {
         RestaurantDetailsResponse restaurantDetailsResponse = new RestaurantDetailsResponse()
                 .restaurantName(restaurantEntity.getRestaurantName())
                 .address(restaurantDetailsResponseAddress)
-                .averagePrice(restaurantEntity.getAvgPrice())
+                .averagePrice(restaurantEntity.getAveragePriceForTwo())
                 .customerRating(BigDecimal.valueOf(restaurantEntity.getCustomerRating()))
-                .numberCustomersRated(restaurantEntity.getNumberCustomersRated())
+                .numberCustomersRated(restaurantEntity.getNumber_of_customers_rated())
                 .id(UUID.fromString(restaurantEntity.getUuid()))
                 .photoURL(restaurantEntity.getPhotoUrl())
                 .categories(categoryLists);
@@ -286,6 +289,7 @@ public class RestaurantController {
         return new ResponseEntity<RestaurantDetailsResponse>(restaurantDetailsResponse,HttpStatus.OK);
     }
 
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.POST, path = "/api/restaurant/{restaurant_id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<RestaurantUpdatedResponse> updateRestaurant(@PathVariable("restaurant_id")final String restaurantUuid, @RequestParam(name = "customer_rating") final Double customerRating,@RequestHeader("authorization")final String authorization)throws AuthorizationFailedException, RestaurantNotFoundException, InvalidRatingException
     {
@@ -308,9 +312,5 @@ public class RestaurantController {
 
         return new ResponseEntity<RestaurantUpdatedResponse>(restaurantUpdatedResponse,HttpStatus.OK);
     }
-    }
-
-
-
 
 }

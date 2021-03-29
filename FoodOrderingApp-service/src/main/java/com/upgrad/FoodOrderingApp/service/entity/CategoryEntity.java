@@ -3,9 +3,16 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "CATEGORY")
+@Table(name = "category")
+@NamedQueries({
+
+        @NamedQuery(name = "getCategoryById",query = "SELECT c FROM CategoryEntity c WHERE c.id = :categryId"),
+        @NamedQuery(name = "getAllCategories",query = "SELECT c FROM CategoryEntity c ORDER BY c.categoryName ASC "),
+})
 public class CategoryEntity {
 
     @Id
@@ -21,6 +28,11 @@ public class CategoryEntity {
     @Column(name = "category_name")
     @Size(max = 30)
     private String categoryName;
+
+    @ManyToMany
+    @JoinTable(name = "category_item", joinColumns = @JoinColumn(name = "category_id"),
+        inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private List<ItemEntity> items = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -44,5 +56,13 @@ public class CategoryEntity {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public List<ItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemEntity> items) {
+        this.items = items;
     }
 }

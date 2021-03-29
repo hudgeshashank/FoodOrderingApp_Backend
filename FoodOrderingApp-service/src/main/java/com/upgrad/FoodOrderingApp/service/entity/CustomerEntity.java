@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "CUSTOMER")
@@ -52,6 +54,9 @@ public class CustomerEntity implements Serializable {
     @Size(max = 255)
     @NotNull
     private String salt;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<AddressEntity> address;
 
     public Integer getId() {
         return id;
@@ -115,5 +120,28 @@ public class CustomerEntity implements Serializable {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public List<com.upgrad.FoodOrderingApp.service.entity.AddressEntity> getAddress() {
+        return address;
+    }
+
+    public void setAddress(List<com.upgrad.FoodOrderingApp.service.entity.AddressEntity> address) {
+        this.address = address;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

@@ -6,10 +6,15 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 
 @Entity
 @Table(name = "ADDRESS")
+@NamedQueries({
+        @NamedQuery(name = "getAllAddress", query = "SELECT a from AddressEntity a"),
+        @NamedQuery(name = "getAddressByAddressId", query = "SELECT a from AddressEntity a where a.uuid = :uuid"),
+})
 public class AddressEntity {
 
     @Id
@@ -43,6 +48,9 @@ public class AddressEntity {
     @NotNull
     @OnDelete(action = OnDeleteAction.CASCADE)
     private StateEntity state;
+
+    @ManyToMany(mappedBy = "address", cascade = CascadeType.ALL)
+    private List<CustomerEntity> customers;
 
     @Column(name = "active")
     private Integer active;
@@ -101,6 +109,29 @@ public class AddressEntity {
 
     public void setState(StateEntity state) {
         this.state = state;
+    }
+
+    public List<CustomerEntity> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<CustomerEntity> customers) {
+        this.customers = customers;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 
     public Integer getActive() {

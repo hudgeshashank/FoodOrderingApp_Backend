@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
@@ -16,17 +17,33 @@ public class AddressDao {
 
     public AddressEntity saveAddress(final AddressEntity address)
     {
-        return null;
+        entityManager.persist(address);
+        return address;
     }
 
     public List<AddressEntity> getAllAddress()
     {
-        return null;
+        try {
+            List<AddressEntity> getAllAddress = entityManager.createNamedQuery("getAllAddress", AddressEntity.class).getResultList();
+            return getAllAddress;
+        } catch (NoResultException nre) {
+            return null;
+        }
     }
 
-    public AddressEntity deleteAddress(final String addressId)
+    public AddressEntity getAddressByAddressId(String addressId){
+        try{
+            AddressEntity addressEntity = entityManager.createNamedQuery("getAddressByAddressId",AddressEntity.class).setParameter("uuid", addressId).getSingleResult();
+            return addressEntity;
+        }catch (NoResultException nre){
+            return null;
+        }
+    }
+
+    public AddressEntity deleteAddress(final AddressEntity addressEntity)
     {
-        return null;
+        entityManager.remove(addressEntity);
+        return addressEntity;
     }
 
 

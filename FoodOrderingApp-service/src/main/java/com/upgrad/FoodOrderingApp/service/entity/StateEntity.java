@@ -6,8 +6,11 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "STATE")
+@NamedQueries({
+        @NamedQuery(name = "getAllStates",query = "SELECT s from StateEntity s"),
+        @NamedQuery(name = "getStateByUuid", query = "SELECT s from StateEntity s where s.uuid = :uuid")
+})
 public class StateEntity {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,6 +35,21 @@ public class StateEntity {
 
     public String getUuid() {
         return uuid;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 
     public void setUuid(String uuid) {
